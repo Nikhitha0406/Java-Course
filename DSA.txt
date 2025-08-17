@@ -47,105 +47,6 @@ class Solution {
     }
 }
 
-Pointers:
-
-#include <stdio.h>
-
-int main() {
-    printf("int: %zu bytes\n", sizeof(int *));     // size of int pointer
-    printf("float: %zu bytes\n", sizeof(float *)); // size of float pointer
-    printf("double: %zu bytes\n", sizeof(double *)); // size of double pointer
-    printf("long: %zu bytes\n", sizeof(long  *));  // size of long pointer
-    printf("char*: %zu bytes\n", sizeof(char *));  // size of char pointer
-    return 0;
-}
- output :
-Sample Output on 64-bit system:
-
-int: 8 bytes
-float: 8 bytes
-double: 8 bytes
-long: 8 bytes
-char*: 8 bytes
-
-
-Types of dynamic memory allocations:
-
-1. malloc() – Memory Allocation
-Syntax: ptr = (type *)malloc(size_in_bytes);
-int *arr = (int *)malloc(5, sizeof(int));
-
-Means: Allocate memory for 5 integers (each usually 4 bytes = 20 bytes). malloc gives the starting address, which we store in arr.
-✅ Pros:
-
-Fast
-❌ Cons:
-
-Doesn’t initialize the memory. Might contain garbage values.
-
-2. calloc() – Contiguous Allocation
-Syntax: ptr = (type *)calloc(number_of_elements, size_of_each);
-
-Example:
-int *arr = (int *)calloc(5, sizeof(int));
-Same as malloc, but all values are initialized to 0.
-
-| **Feature / Concept**         | **C Language**                                               | **Java Language**                                             |
-| ----------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------- |
-| **Memory Allocation Method**  | Manual using `malloc()`, `calloc()`, `realloc()`             | Using `new` keyword                                           |
-| **Pointer Usage**             | Explicit pointers are required for dynamic memory access     | No explicit pointer syntax; memory is accessed via references |
-| **Data Type Handling**        | Must specify size manually (e.g., `sizeof(type)`)            | Handled automatically by JVM                                  |
-| **Return Type of Allocation** | Returns `void*` — needs explicit typecasting                 | Returns a reference to the allocated object/array             |
-| **Memory Deallocation**       | Manual using `free()`                                        | Automatic via Garbage Collector (GC)                          |
-| **Risk of Memory Leaks**      | High — due to manual management and dangling pointers        | Low — GC helps, but leaks possible via strong references      |
-| **Null Pointer Check**        | Manual check: `if (ptr == NULL)`                             | JVM throws `NullPointerException` if a null is dereferenced   |
-| **Memory Location**           | Stack (local vars), Heap (dynamic via `malloc`)              | Stack (primitives/references), Heap (objects)                 |
-| **Syntax Example**            | `int *ptr = (int *)malloc(10 * sizeof(int));`                | `int[] arr = new int[10];`                                    |
-| **Array Allocation**          | Manual — pointer + memory functions                          | Automatic — `new` handles size, no pointer arithmetic         |
-| **Memory Safety**             | Low — prone to overflows, invalid access, undefined behavior | High — array bounds checked, no direct memory access          |
-| **Performance Control**       | Fine control — close to hardware level                       | Limited control — JVM abstracts memory management             |
-
-
-Comparison: Static vs Dynamic Memory Allocation:
-
-| **Aspect**                 | **Static Memory Allocation**                                              | **Dynamic Memory Allocation**                                            |
-| -------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| **Memory Allocation Time** | At **compile time**                                                       | At **runtime**                                                           |
-| **Memory Location**        | **Stack** (local variables) or **Data Segment** (global/static variables) | **Heap**                                                                 |
-| **Memory Size**            | Fixed and cannot be changed during execution                              | Flexible — can be increased or decreased during execution                |
-| **Lifespan of Variable**   | Limited to scope (e.g., function or file scope)                           | Exists until explicitly deallocated using `free()`                       |
-| **Declaration Example**    | `int arr[10];`                                                            | `int* arr = (int*)malloc(10 * sizeof(int));`                             |
-| **Memory Management**      | Handled automatically by the compiler                                     | Manually managed using `malloc()`, `calloc()`, `realloc()`, and `free()` |
-| **Efficiency**             | Faster access, low overhead                                               | Slower access, overhead due to heap management                           |
-| **Risk of Memory Leak**    | Very low — compiler manages allocation and deallocation                   | High — improper `free()` usage can cause memory leaks                    |
-| **Flexibility**            | Less flexible — size must be known at compile time                        | More flexible — size can be decided at runtime                           |
-| **Pointer Requirement**    | Not required                                                              | Required — pointer holds the address of allocated memory                 |
-| **Reallocation**           | Not possible                                                              | Possible using `realloc()`                                               |
-| **Use Case**               | When memory size is known in advance (e.g., fixed arrays)                 | When memory size depends on input or changes during execution            |
-
- 
-Program for allocation and deallocation of memory:
-
-#include <stdio.h>
-#include <stdlib.h>
-
-int main()
-{
-    int N=5;
-    int *arr;
-    arr=(int*)malloc(N*sizeof(int));
-    for(int i=0; i<N; i++){
-        arr[i]=i*i;
-    }
-    printf("Array is ");
-    for(int i=0; i<N; i++){
-        printf("%d", arr[i]);
-        printf(" ");
-    }
-    free(arr);
-    return 0;
-    
-}  
 
 Anagrams:
 
@@ -287,27 +188,7 @@ class Main{
         System.out.println(res.trim());
     }
 }    
-
-
- What is a Linked List?
-
-A **Linked List** is a linear data structure where elements are stored in **nodes**, and each node points to the next node in the sequence.
-
- Structure:
-
-Each node contains:
-
-1. **Data**
-2. **Reference (pointer) to the next node**
-
- Types of Linked Lists:
-
-* **Singly Linked List** → Each node points to the next.
-* **Doubly Linked List** → Each node points to both previous and next.
-* **Circular Linked List** → Last node points back to the first.
- 
-Example in Java (Singly Linked List):
-
+ LinkedList:
 java
 class Node {
     int data;
@@ -333,130 +214,6 @@ public class LinkedListDemo {
         }
     }
 }
-
- Difference between Array and Linked List:
-
-| Feature                | Array                                 | Linked List                          |
-| ---------------------- | ------------------------------------- | ------------------------------------ |
-| **Memory**             | Contiguous block in memory            | Nodes can be scattered anywhere      |
-| **Size**               | Fixed size (unless using `ArrayList`) | Dynamic (can grow/shrink easily)     |
-| **Access Time**        | Constant time (O(1)) using index      | Linear time (O(n)) to access element |
-| **Insertion/Deletion** | Expensive (need to shift elements)    | Easy (just change pointers)          |
-| **Cache Locality**     | Better (due to contiguous memory)     | Poor (nodes not next to each other)  |
-| **Memory Usage**       | Uses less (just values)               | Uses more (value + pointer)          |
-
-When to Use What?
-
-| Scenario                               | Use...      |
-| -------------------------------------- | ----------- |
-| Need fast random access (`arr[i]`)     | Array       |
-| Need frequent insertions/deletions     | Linked List |
-| Know the number of elements in advance | Array       |
-| Don’t know size in advance             | Linked List |
-
- Referential Structure of a Linked List
-
-A **referential structure** in the context of a linked list refers to how each node holds a **reference (or pointer)** to the next (or previous) node in memory — forming a chain-like structure.
-
- **Singly Linked List — Referential Diagram:**
-
-Each node contains:
-
-
-[Data | Next]
-
-
-And `Next` points to the next node.
-
- Visual:
-
-```
-head → [10 | o-] → [20 | o-] → [30 | null]
-```
-
-* `head` points to the first node.
-* Each node contains data and a reference (link) to the next node.
-* Last node's `next` is `null`.
-
- **Java Class Structure (Singly Linked List Node):**
-
-java
-class Node {
-    int data;
-    Node next;
-
-    Node(int data) {
-        this.data = data;
-        this.next = null;
-    }
-}
-
- **Doubly Linked List — Referential Diagram:**
-
-Each node has two references:
-
-
-[Prev | Data | Next]
-
-
- Visual:
-
-null ← [10 | o | o] ⇄ [20 | o | o] ⇄ [30 | o | null]
-
-
-* First node's `prev` is `null`
-* Last node's `next` is `null`
-* Nodes can be traversed both directions
-
- Referential Summary:
-
-| List Type            | References per Node | Direction          | End Pointer          |
-| -------------------- | ------------------- | ------------------ | -------------------- |
-| Singly Linked List   | 1 (next)            | Forward only       | null                 |
-| Doubly Linked List   | 2 (prev & next)     | Forward & Backward | nulls at both ends   |
-| Circular Linked List | 1 or 2              | Circular           | Last points to first |
-
- Advantages of Linked List over Arrays:
-
-Linked Lists offer several advantages, especially when it comes to dynamic data manipulation. Here's a breakdown:
-
- 1. **Dynamic Size (No Need to Predefine)**
-
-* You don’t need to know the size of the data beforehand.
-* Nodes can be added or removed as needed.
-
-**Contrast:** Arrays have a fixed size unless using a dynamic wrapper like `ArrayList`.
-
-2. **Efficient Insertions/Deletions**
-
-* Insertions and deletions are easy and fast (O(1)) **if the pointer to the location is known**.
-* No need to shift elements like in arrays.
-
- 3. **Memory Utilization**
-
-* Memory is allocated only when needed (during runtime).
-* Efficient use in cases where memory usage needs to be flexible.
-
- 4. **No Wastage of Memory**
-
-* Since linked lists allocate memory as they grow, there's no unused space (unlike arrays which may have reserved but unused slots).
-
- 5. **Easy Implementation of Data Structures**
-
-* Useful for implementing **stacks**, **queues**, **graphs**, **hash tables**, and **adjacency lists**.
-
- 6. **Can Easily Grow Beyond Physical Memory Limits (if Virtual Memory Available)**
-
-* Since elements are scattered across memory, a very large linked list can be more memory-flexible than a giant contiguous array
-
-Summary Table
-Type	               Traverse  Bi-Directional	Circular  Time Complexity (Search)	Use Case Examples
-Singly Linked List	Forward	    ❌	         ❌	         O(n)	              Stack, simple storage
-Circular Singly LL	Forward	    ❌	         ✅	         O(n)	              Round-robin scheduling
-Doubly Linked List	Both	    ✅	         ❌	         O(n)	              Browser history, undo/redo
-Circular Doubly LL	Both	    ✅	         ✅	         O(n)	              Music playlists, cyclic navigation
-Skip List	       Forward	    ❌	         ❌	       O(log n)	              Databases, large sorted data search
-
 
 program to insert a node at the beg:
 import java.util.*;
@@ -515,25 +272,6 @@ class Main {
 }
 
 Circular Linkedlist:
-
-A circular linked list is a type of linked list in which the last node points back to the first node, instead of having a null (or None) reference. This creates a circular structure.
-
-Types:
-
-Singly Circular Linked List:
-
-Each node has a data and a next pointer.
-The next pointer of the last node points to the first node.
-Ex: loop mode(playlist), josephs problem
-
-Doubly Circular Linked List:
-
-Each node has data, a prev, and a next pointer.
-The next of the last node points to the first node.
-The prev of the first node points to the last node.
-Ex: shuffle mode
-
-
 josephus problem using circular linkedlist:
 
 import java.util.*;
@@ -592,46 +330,8 @@ class singlyLinkedList{
     }
 }
 
-stack:
-
-A stack is a linear data structure that follows the LIFO (Last In First Out) principle. The last element added to the stack is the first one to be removed.
-
-| Operation   | Description                                 |
-| -----------         | ------------------------------------------- |
-| `push(x)`   | Adds element `x` to the top of the stack    |
-| `pop()`        | Removes and returns the top element         |
-| `peek()`      | Returns the top element without removing it |
-| `isEmpty()` | Checks if the stack is empty                |
-| `size()`      | Returns the number of elements in the stack |
-
-Applications of Stack:
-
-To implement recursive functions
-
-balancing brackets('(' ')')
-
-Expression evaluation (e.g., postfix, infix → postfix)
-
-Balanced parentheses checking
-
-Backtracking problems (e.g., maze, recursion)
-
-Undo operations in text editors
-
-DFS (Depth First Search)
-
-Function call stack in programming
-
-to perform tree traversal operations
-
-to manage threads in os
-
-to convert decimal num into other num systems
-
-stack implementation:
-
 // Online Java Compiler
-// Use this editor to write, compile and run your Java code online
+
 import java.util.*;
 class Main {
     static int top=-1;
@@ -759,84 +459,11 @@ class Main {
 }
 
 Queue:
-A Queue is a linear data structure that follows the First-In-First-Out (FIFO) principle, meaning the element added first is removed first.
 
-Real-life Examples of Queues:
-People waiting in line.
-Tasks in a printer queue.
-Customer service calls.
-Web development.
-in call centers
-Elevtor
-Job Scheduling
+I
 
-Basic Operations on Queue:
-| Operation        | Description                                                  | Time Complexity |
-| ------------            | ------------------------------------                        | --------------- 
-| `enqueue(x)` | Add element `x` to the rear                  | O(1)            |
-| `dequeue()`    | Remove and return front element      | O(1)            |
-| `peek()`           | Return the front element (no remove) | O(1)            |
-| `isEmpty()`    | Check if queue is empty                          | O(1)            |
-| `size()`     | Return number of elements                          | O(1)            |
 
-Types of queues:
-1.Linear queue - disadvantage -->poor memory utilization.
-2.Circular queue - disadvantage in linear queue can be resolved using circular queues.
-3.Priority queue
-4.Dequeue
-*if(rear==front) --> queue is empty.if we try to insert an element it undergoes overflow.
-*when the front ==(rear+1)%s queue is full.
-*if(rear==n-1) --> queue is full .if we try to delete element it undergoes underflow.
-
-Common implementations:
-LinkedList → general-purpose queue.
-ArrayDeque → more efficient than LinkedList.
-PriorityQueue → elements ordered by priority, not FIFO.
-
- Disadvantages of Linear Queue: 
-A linear queue works with two pointers: front and rear, and elements are added at the rear and removed from the front.
-Main disadvantages:
-Wasted Space:
-After several enqueue and dequeue operations, even if there’s space in the front part of the array, it can't be reused.
-Fixed Size:
-Once the rear reaches the end of the array, you can’t insert more elements unless you shift all elements (which is expensive).
-Inefficient for Continuous Use:
-Continuous insertions and deletions lead to inefficient memory use unless queue is reset or shifted.
-Advantages of Circular Queue
-A circular queue overcomes the limitations of the linear queue by treating the array as circular (i.e., after the last index, it wraps around to index 0).
-
-Main advantages:
-Efficient Use of Space:
-It reuses the vacant space left by dequeued elements, avoiding the wasted-space problem.
-Prevents Overflow (Better Memory Management):
-Makes full use of allocated memory and allows more elements to be added before reaching overflow.
-Ideal for Fixed Memory Systems:
-Useful in embedded systems, operating systems (like CPU scheduling), printers, etc., where memory is limited and must be used efficiently.
-Faster Operations:
-No need to shift elements (as in array-based linear queues) — wrap-around is handled in constant time using modulo.
-count number of set bits
-maximum and value
-
-Linear Search:
-Linear search (also called sequential search) is the simplest searching algorithm used to find a target element in a list or array.
-
- How it works:
-You go through each element one by one from the beginning to the end, comparing each element with the target value.
-
-Algorithm Steps:
-Start from the first element.
-
-Compare the target with the current element.
-
-If it matches, return the index (or element).
-
-If not, move to the next element.
-
-Repeat until the end of the array.
-
-If not found, return -1 (or "Not Found").
-
-Linear searchimplementation using recursion:
+Linear search implementation using recursion:
 
 class Main {
     public static void main(String[] args) {
@@ -860,38 +487,6 @@ class Main {
 }
 
 Binary search:
-
-What is Binary Search?
-Binary search is an efficient searching algorithm that works only on sorted arrays (or lists).
-It repeatedly divides the search interval in half to find the target.
-
- How it works:
-Start with the low and high pointers at the beginning and end of the array.
-
-Find the middle element.
-
-Compare the target with the middle:
-
-If it's equal, you found the element.
-
-If target < mid, search in the left half.
-
-If target > mid, search in the right half.
-
-Repeat steps 2-3 until you find the target or the range is empty.
-
-Time Complexity:
-
-Best Case: O(1)
-
-Average & Worst Case: O(log n)
-
-Much faster than linear search for large sorted arrays.
-
-Key Point:
-Binary Search requires the array to be sorted. If not sorted, use Linear Search or sort it first.
-
-
 Binary search implementation:
 
 import java.util.*;
@@ -945,19 +540,7 @@ class Main {
     }
 }
 Sorting techniques:
-
 1.Bubble sort:
-
- What is Bubble Sort?
-Bubble Sort is a simple sorting algorithm that works by repeatedly swapping adjacent elements if they are in the wrong order. It "bubbles" the largest elements to the end of the array step-by-step.
-
- How it works:
-Compare each pair of adjacent elements.
-
-Swap them if they are in the wrong order.
-
-Repeat for all elements.
-
 import java.util.*;
 class Main {
     public static void main(String[] args) {
@@ -980,27 +563,8 @@ class Main {
         
     }
 }
- 
-Time Complexity:
-Best case (sorted): O(n)
-
-Worst/Average case: O(n²)
-
-Space Complexity: O(1) (in-place)
 
 Selection Sort :
-
-Selection Sort is a sorting algorithm that works by repeatedly finding the smallest (or largest) element from the unsorted part of the array and swapping it with the first unsorted element.
-
- How It Works:
-Start from the first element.
-
-Find the minimum element in the remaining array.
-
-Swap it with the first unsorted element.
-
-Repeat this process for all positions in the array.
-
 import java.util.*;
 class Main {
     public static void main(String[] args) {
@@ -1031,19 +595,6 @@ class Main {
  
 Insertion sort:
 
-Insertion Sort builds the sorted array one element at a time by inserting each new element into its correct position in the already sorted part of the array.
-
- How It Works:
-Start from the second element (index 1).
-
-Compare it with elements before it.
-
-Shift all larger elements to the right.
-
-Insert the current element at its correct position.
- 
-Efficient implementation of Insertion Sort:
-
 import java.util.*;
 class Main {
     public static void main(String[] args) {
@@ -1067,34 +618,7 @@ class Main {
         
     }
 }
-Time and Space Complexity:
-Case	                       	Time
-Best Case (already sorted)  	O(n)
-Worst Case (reversed)		O(n²)
-Space				O(1)
-It is efficient because it reduces too many swaps and operations.
-
-Quick Sort is a divide-and-conquer algorithm. It’s one of the fastest sorting algorithms for large datasets. 
-
- Working of Quick Sort:
-
-Pick a Pivot – Choose an element as a pivot (last element, first element, middle, or random).
-
-Partition – Rearrange the array so that:
-
-All elements less than pivot go to its left
-
-All elements greater than pivot go to its right
-
-Recursively sort the left and right parts.
-
-Time & Space Complexity:
-Case		Time Complexity
-Best Case	O(n log n)
-Average Case	O(n log n)
-Worst Case	O(n²) (rare)
-
-Space Complexity: O(log n) (due to recursion stack)
+Quick Sort:
 Algorithm:
 quicksort(arr, low ,high)
 if(low<high)
@@ -1150,121 +674,6 @@ public class Main
 }
 
 Merge sort:
-
-Merge Sort is a divide and conquer algorithm. It:
-
-Divides the array into two halves.
-
-Recursively sorts each half.
-
-Merges the two sorted halves into a single sorted array.
-
- Time & Space Complexity:
-Case		Time		Space
-Best		O(n log n)	O(n)
-Average		O(n log n)	O(n)
-Worst		O(n log n)	O(n)
-mergeSort(arr, p, r)
-if p<r
- then q <- (q+r)/2
-mergeSort(arr, p, q)// for left partition
-mergeSort(arr, q+1, r) //for right partition
-mergeSort(arr, p, q, r)// to merge two sorted arrays
-
-Trees(Nonlinear data structrue):
-
-A tree data structure is a widely used hierarchical data structure that simulates a tree-like structure with a root and subtrees of children, represented as a set of connected nodes. It is non-linear, meaning it does not store data in a sequential manner (like arrays or linked lists), and it's especially useful for representing hierarchical relationships.
-
-Types of Trees:
-
-1.Binary Tree: Each node has at most 2 children (left and right).
-
-There are types in binary tree:
-
-1. Strict Binary Tree (also called Proper or Full Binary Tree):
- Definition:
-A Strict Binary Tree is a binary tree in which every non-leaf node has exactly two children (no node has only one child).
-
- Characteristics:
-Each node has 0 or 2 children.
-
-All leaf nodes are at different levels (not necessarily the same level).
-
-Not all levels need to be filled.
-
- Example:
-
-        A
-       / \
-      B   C
-     / \   \
-    D   E   F   ← Invalid! C has only one child (Not Strict)
-
-Correct strict binary tree:
-
-        A
-       / \
-      B   C
-     / \ / \
-    D  E F  G
-
- 2. Complete Binary Tree:
- Definition:
-A Complete Binary Tree is a binary tree in which all levels are completely filled except possibly the last, and all nodes in the last level are as far left as possible.
-
-Characteristics:
-All levels are fully filled except maybe the last.
-
-Nodes at the last level must be added from left to right.
-
-Commonly used in heap structures (min-heap/max-heap).
-
- Example:
-
-Valid Complete Binary Tree:
-
-        A
-       / \
-      B   C
-     / \  /
-    D  E F
-
-Invalid (Not Complete - F is not as far left as possible):
-
-        A
-       / \
-      B   C
-     /     \
-    D       F
-
-2.Binary Search Tree (BST):
-
-Left child < Parent < Right child.
-Efficient for searching and insertion (O(log n) time in average cases).
-Balanced Binary Tree: Maintains height balance for performance (e.g., AVL Tree, Red-Black Tree).
-
-3.Heap Tree:
-
-Max-Heap: Parent ≥ children.
-Min-Heap: Parent ≤ children.
-
-4.N-ary Tree: A node can have at most N children.
-
-5.Trie (Prefix Tree): Special tree used in text search/autocomplete.
-
-6.Segment Tree / Fenwick Tree (BIT): Used for range queries and updates on arrays.
-
-Why Use Trees?
-Represent hierarchical data like file systems, XML/HTML, organization charts, etc.
-
-Used in databases, search engines, compilers, and AI.
-
-Efficient for searching, sorting, and hierarchical representation.
-
-Used in routings, B andB+ implementations.
-
-Leaf node- degree of a node is 0
-
 Structure of binary tree:
 
 class TreeNode {
@@ -1278,60 +687,6 @@ class TreeNode {
         right = null;
     }
 }
-
-Tree traversal - In tree traversal, we visit each node of the tree at least once and print or process the value.
-There are two types:
-1.BFS -Breadth first Search(level order):
-Visit nodes level by level from top to bottom, left to right using a Queue.
- Example
-Given this tree:
-
-        1
-       / \
-      2   3
-     / \
-    4   5
-from 0th level to nlevel , we have to traverse from left to right.
-1 -> 2 -> 3 -> 4 -> 5
-
-2.DFS -Depth first Search:
-
-DFS (Depth-First Search) is a tree traversal method where we:
-
-Start from the root,
-Go deep into one branch as far as possible,
-Then backtrack and explore other branches.
-
- DFS Traversal Types in Trees: 
-
-DFS includes three main types of traversals:
-| Type      		| Order               |
-| ---------		| ------------------- |
-| Preorder 	| Root → Left → Right |
-| Inorder   	| Left → Root → Right |
-| Postorder 	| Left → Right → Root |
-
-  Example:
-        1
-       / \
-      2   3
-     / \
-    4   5
-
-| Traversal 	| Output Sequence |
-| --------- 		| --------------- |
-| Preorder  	| 1 2 4 5 3       |
-| Inorder   	| 4 2 5 1 3       |
-| Postorder 	| 4 5 2 3 1       |
-
-Recursive Call for Inorder Traversal in a Binary Tree:
-
-1.Inorder Traversal Rule:
-Left → Node → Right
-So, for each node:
-Traverse the left subtree (inorder(node.left))
-Visit the node (print(node.data))
-Traverse the right subtree (inorder(node.right))
 
 logic:
 if (root == null) return;
@@ -1507,10 +862,7 @@ public class TreeInput {
     }
 }
 
-1. Height of a Tree
-Definition:
-The height of a tree is the number of edges on the longest path from the root to a leaf.
-
+1. Height of a Tree:
  Recursive Formula:
 
 height = 1 + max(height of left subtree, height of right subtree)
@@ -1608,42 +960,7 @@ class Main {
 }
 
 Binarysearch tree:
-
-A Binary Search Tree (BST) is a special kind of binary tree that maintains a specific order among its elements to allow fast searching, insertion, and deletion.
-
-Definition:
-A Binary Search Tree is a binary tree where each node satisfies the following properties:
-Left Subtree has nodes with values less than the parent node.
-Right Subtree has nodes with values greater than the parent node.
-Both the left and right subtrees are also BSTs.
-
-Example:
-       50
-      /  \
-    30    70
-   / \    / \
-  20 40  60 80
-All nodes on the left of 50 are smaller
-All nodes on the right of 50 are greater
-Subtrees like (30, 20, 40) and (70, 60, 80) also follow the same rule
-
-Common Operations:
-Operation	Time Complexity
-Search		O(log n) average, O(n) worst case
-Insert		O(log n) average, O(n) worst case
-Delete		O(log n) average, O(n) worst case
-
-The worst-case occurs when the tree becomes skewed (like a linked list)
-
- Use Cases:
-Databases and indexing
-Searching and sorting data
-Implementing sets and maps
-
 Binary search tree implementation:
-
-// Online Java Compiler
-// Use this editor to write, compile and run your Java code online
 class Node{
     int data; 
     Node left, right;
@@ -1684,55 +1001,6 @@ public class Main {
         inorder(root);
     }
 }
-
-Steps to Delete a Node from BST:
-Deleting a node from a Binary Search Tree (BST) involves handling three possible cases based on the number of children of the node to be deleted.
-
- Step-by-step Breakdown:
-Step 1: Search for the Node
-Start from the root.
-
-If key < root.val, go left.
-
-If key > root.val, go right.
-
-If key == root.val, you found the node to delete.
-
- Step 2: Handle 3 Deletion Cases
-Case	Description	What to Do
-1	Node has no children (leaf)	Simply remove it
-2	Node has one child	Replace it with its child
-3	Node has two children	Replace node with its inorder successor (min node in right subtree), then delete the successor
-
-Inorder Successor = smallest value in the right subtree
-(e.g., leftmost node of node.right)
-
-** Whenever we are considering binary search tree , inorder traversal elements are in ascending order.
-** When performing deletion operation to the parent node of the subtree, I can choose either of the closest least value or the highest value.
-**  What is Inorder Successor in a Binary Search Tree (BST)?
-The inorder successor of a node in a BST is the node that comes immediately after the given node in the in-order traversal (Left → Root → Right).
-Cases to Find Inorder Successor:
- Case 1: Node has a right subtree
-The inorder successor is the leftmost node in the right subtree.
-      20
-     /  \
-    10  30
-          \
-           40
-Inorder successor of 20 = 30
-Inorder successor of 30 = 40
-
-Case 2: Node has no right subtree
-Go up the tree until you find a node that is the left child of its parent. The parent will be the successor.
-Example:
-
-      50
-     /
-    30
-   /  \
-  20  40
-Inorder successor of 40 = 50
-Successor- min of max or max of min 
 
 Delete a key from a tree:
 
@@ -1905,101 +1173,9 @@ public class Main {
     }
 }
 
-Difference Between Floor and Ceil in a Binary Search Tree (BST):
-
-| Feature                    		| **Floor**                                          		        | **Ceil**                                           |
-| -------------------------- 		| --------------------------------------------------			| -------------------------------------------------- |
-| **Definition**             		| Greatest value **≤ key**                           			| Smallest value **≥ key**                           |
-| **Use Case**               		| Find closest smaller or equal element              			| Find closest greater or equal element              |
-| **Example** (with key = 5) 		| If BST has `2, 3, 4, 6, 8` → **Floor = 4**         			| **Ceil = 6**                                       |
-| **Condition to update**    		| If `node.data ≤ key`, move right and update floor  			| If `node.data ≥ key`, move left and update ceil    |
-| **When not found**         		| Return -1 or null if no smaller/equal value exists 			|Return -1 or null if no greater/equal value exists |
-
-        6
-       / \
-      3   8
-     / \    \
-    2   4    9
-floor(5) → 4 (greatest ≤ 5)
-
-ceil(5) → 6 (smallest ≥ 5)
-
-** program to find minimum element:
-if(root==null) return -1;
-while(root.left!=null){
-root=root.left;
-}
-return root.data;
-
-** program to find minimum element using recursion:
-public static Node minelement(Node root){
-if(root==null) return -1;
-if(root.left==null) return root;
-return minelement(root.left);
-}
-
-** program to find maximum element:
-if(root==null) return -1;
-while(root.right!=null){
-root=root.right;
-}
-return root.data;
-
-Algorithm Techniques:
-Algorithm is a step by step process or a kind of logic to implement a solution to a given scenario or a problem.
-Whenever we are writing an algorithm we need to consider following constraints:
-1.First we have to check does any existence slotion or approach to a given scenario or a problem.
-2.Implement the approach you have.
-3.We have to consider the quality and quantity of the approach we have designed should be checked.
-4.That means, we have to measure the rtime and space complexity of the approach, we have considered.
-5.If we have any other approach which gives you better time and space complexity , then we have to prefer that one.
-
-Ex: Finding sum of natural numbers:
-for(int i=0; i<n; i++){
-sum+=i;
-}consider the iterations till n 
-we have to add given element to the sum variable .Here we have time complexity as O(n)
-** To attain better time and space complexity we have to consider another approach,  we have mathematical solution for this problem n*(n+1)/2.Then , finally mathematical solution gives time complexity as O(1)which is efficient approach.
-
-Greedy Algorithm:
-While implementing the greedy, choosing the element and considering the element as best element (our assumption)
-In greedy, we will consider one local optimal element for the solution and we will make as a global optimal one.
-All the assumptions are not guaranteed.
-Ex:6 4 3 9 7 5 2 8
-assume 6 as a best element as a final element.After that we need to compare all the elements with 6 and we choose 2 as a best element.
-begin
-while(solution completes){
-min ele;
-swapping; 
-remove element;
-}end loop
-(n-1)+(n-2)+...........+3+2+1+0;  tc=n(n+1)/2 avg case:thetha(n^2)  
-while in bubble sort, the iterations of the traversal is reduced in traversal insteading of traversing all the elements, eventhough the time complexity is same .
-
-Activity Selection Problem (Greedy Method):
-The Activity Selection Problem is a classic Greedy Algorithm problem.
-
- Problem Statement:
-Given n  activities with start time and end time, select the maximum number of activities that can be performed by a single person, assuming a person can only do one activity at a time.
-
-Input:
-Two arrays:
-start[] = {1, 3, 0, 5, 8, 5}
-end[] = {2, 4, 6, 7, 9, 9}
-
- Goal:
-Select maximum number of non-overlapping activities.
-
  Greedy Strategy:
-Always pick the activity that finishes earliest.
-
- Steps:
-Sort activities by their end time.
-Select the first activity.
-For each next activity, if its start time ≥ last selected activity’s end time, select it.
- 
+1.Activity Selection:
 Program for activity selection:
-
 class Solution {
     public int activitySelection(int[] start, int[] finish) {
         int n=start.length;
@@ -2020,113 +1196,7 @@ class Solution {
         
     }
 }
-
-**Max heap and Min heap:
-A heap is a special binary tree (specifically a complete binary tree) used to implement priority queues.
-
-*Min Heap:
-Definition: In a Min Heap, the parent node is always less than or equal to its child nodes.
-Root: Contains the smallest element.
-Property: A[i] ≤ A[2i + 1] and A[i] ≤ A[2i + 2] for array-based representation.
-Use Case: When you want to extract the minimum element quickly.
-
-Example:
-    2
-   / \
-  3   5
- / \
-7   8
-
-*Max Heap:
-Definition: In a Max Heap, the parent node is always greater than or equal to its child nodes.
-Root: Contains the largest element.
-Property: A[i] ≥ A[2i + 1] and A[i] ≥ A[2i + 2].
-Use Case: When you want to extract the maximum element quickly.
-
-Example:
-    10
-   /  \
-  7    5
- / \
-3   2
-Array Representation
-For an element at index i in a heap:
-
-Left child = 2*i + 1
-Right child = 2*i + 2
-Parent = (i - 1) / 2
-
-* Operations (Common for Min/Max Heap):
-Operation		Time Complexity
-Insert			O(log n)
-Delete			O(log n)
-Get Min/Max		O(1)
-Build Heap		O(n)
-
-*Applications:
-
-Dijkstra’s Algorithm	Priority queues (highest first)
-Prim’s MST Algorithm	Scheduling processes
-Merging k sorted lists	Finding top k largest elements
-HeapSort		HeapSort
-
 HeapSort:
-Heap Sort can also be done with a Min Heap, but Max Heap is typically used to sort in ascending order.
-Heap Sort is a comparison-based sorting algorithm that uses the heap data structure.
-Time Complexity: O(n log n)
-Space Complexity: O(1) (in-place)
-Not stable
-
-Steps to construct heapsort:
-Build a Max Heap from the array.
-Swap the root (max element) with the last element.
-Heapify the root of the reduced heap.
-Repeat until the array is sorted.
-
- Step-by-Step Example
-Input: [4, 10, 3, 5, 1]
-Step 1: Build Max Heap
-Result: [10, 5, 3, 4, 1]
-Step 2: Swap first and last → [1, 5, 3, 4, 10]
-Heapify → [5, 4, 3, 1, 10]
-Step 3: Swap first and second-last → [1, 4, 3, 5, 10]
-Heapify → [4, 1, 3, 5, 10] → [4, 1, 3, 5, 10]
-Continue until sorted...
-
- Heap Sort Using Array
-We'll use a Max Heap to sort the array in ascending order.
- Step-by-Step Overview
-Given array: arr = [4, 10, 3, 5, 1]
-
-Steps:
-Build a Max Heap from the array.
-Repeat:
-Swap the first element (maximum) with the last element.
-Reduce the heap size by one.
-Heapify the root again to maintain the Max Heap.
-
-Applications of Greedy algorithm:
-1.Activity selection.
-2.Prims Algorithm.
-3.Job sequence Algorithm.
-4.Fractional Knapsack.
-5 Krushall algorithm.
-6 Huffman Coding.
-
-Example Problem:
-You have coins of denominations: 1, 2, and 5.
-You need to make a total of 11 using the fewest number of coins.
-Available denominations:
-Coins = [1, 2, 5]
-Target amount:
-Amount = 11
-One Optimal Solution:
-Use two 5 coins → 5 + 5 = 10
-Use one 1 coin → 10 + 1 = 11
-Coins used: [5, 5, 1] → Total coins = 3
-
-Finding the min amount for buying all the flowers: 
-formula: arr[i]*(1+i/k)
 import java.util.*;
 class Main {
     public static void main(String[] args) {
@@ -2171,62 +1241,6 @@ class Main {
 }
 
 Job Sequencing Problem :
-
-The Job Sequencing Problem is a popular greedy algorithm problem where the goal is to schedule jobs to maximize profit, considering that:
-Each job takes exactly 1 unit of time.
-Each job has a deadline before which it must be completed.
-Each job gives a profit if completed before or on its deadline.
-Only one job can be done at a time.
-
- Real-Life Analogy
-Imagine you're a freelancer with a list of projects. Each project pays you money, but you have limited time. You want to pick the projects that pay the most and can be finished on time.
-
- Problem Input
-You are given n jobs. Each job has:
-An id
-A deadline (unit of time)
-A profit
-
- Example:
-Job ID	Deadline	Profit
-1	2		100
-2	1		50
-3	2		10
-4	1		20
-5	3		30
-
-Goal
-Schedule jobs such that:
-Total profit is maximum.
-No two jobs overlap (only 1 job per time slot).
-
- Steps in Greedy Solution:
-
-Sort jobs by profit in descending order.
-Find the maximum deadline among all jobs (say maxDeadline).
-Create a time slots array of size maxDeadline.
-
-For each job in sorted list:
-
-Try to place it in the latest available time slot ≤ job.deadline.
-If slot is free, assign the job and add its profit.
-If no such slot, skip the job.
-
- Greedy Choice Justification
-We sort by maximum profit first, because:
-
-"By selecting the highest-profit job as early as possible, we keep the option open to fill other slots later, thus maximizing total profit."
-
- Output
-You typically return:
-Number of jobs done
-Total profit earned
-
- Time and Space Complexity
-Sorting jobs: O(n log n)
-Finding slot for each job: O(n*d) where d is max deadline
-Can be optimized to O(n log n) using Disjoint Set (Union-Find).
-
 program:
 
 import java.util.*;
@@ -2256,53 +1270,6 @@ class Main {
 
 Dynaic programming:
 
-Dynamic Programming is a technique used to solve problems by breaking them down into smaller subproblems, solving each subproblem once, and storing their results to avoid redundant work.
-Used when:
-Problem has Overlapping Subproblems
-Problem has Optimal Substructure
-Generally we divide into subsequences in plain recursion, while coming to dynamic programming w suppose to store te soution and we can reuse it whenever or wherever we need.
-There are two categories in dynamic programming:
-| Approach                  		| Description                                                                      |
-| -------------------------- 		| -------------------------------------------------------------------------------- |
-| **Top-Down** (Memoization) 	| Solve the problem recursively and store the results in a table (cache).          |
-| **Bottom-Up** (Tabulation) 	|Solve the problem iteratively from the smallest subproblems to the full problem. |
-
-Bellman ford algorithm
-floyd warshall algorithm
-diff algorithm
-used for version control(git, etc)
-used for binding vertices of the graph
-
-Memoization:
-Memoization is a technique in Dynamic Programming (Top-Down) where we:
-Solve problems recursively
-Store the results of already-solved subproblems
-Reuse them when the same subproblem is encountered again
-This avoids repeated work and makes the solution faster.
-** If you are aware common inbuilt values for a problem you will store in an array.
-** While using memoization , using 1n parameters you have to use 1D memo and when using nxm parameters you have to use 2D memo.
-import java.util.*;
-class Main{
-    static int[] dp;
-    public static void main(String[] args){
-        Scanner sc=new Scanner(System.in);
-        int n=sc.nextInt();
-        dp=new int[n+1];
-//(we can also use Arrays.fill(dp, -1) to place -1 in all indexes and at that time we need to check dp[n]!=-1)
-        System.out.println(memo(n));
-        
-    }
-    public static int memo(int n){
-        if(n==0 || n==1){
-            return n;
-        }
-        if(dp[n]!=0){
-            return dp[n];
-        }
-        return dp[n]=memo(n-1)+memo(n-2);
-    }
-}
-
 **Given a array and print number of possibilities of reaching given target:
 import java.util.*;
 class Main {
@@ -2318,9 +1285,6 @@ class Main {
         return recursion(arr, n, target-arr[n-1])+recursion(arr, n-1, target);
     }
 }
-Time complexity: 2^target
-import java.util.*;
-
 class Main {
     public static void main(String[] args) {
         int[] arr = {1, 2, 3};
@@ -2350,49 +1314,6 @@ class Main {
 for printing all combinations
 
 Tabulation:
-
-Tabulation is a bottom-up dynamic programming (DP) technique used to solve problems by filling up a DP table iteratively. It’s the opposite of memoization (which is top-down and uses recursion with caching).
-
- Key Features of Tabulation:
-Iterative approach (no recursion)
-Uses a DP table (usually an array or matrix)
-Starts solving from the base case(s)
-Builds up the solution to the final problem
-
- General Steps for Tabulation:
-Define the DP table structure (1D or 2D array).
-Initialize the base cases in the table.
-Iterate from the smallest subproblems up to the one you want.
-Use previous values in the table to build the current value.
-
-Why use Tabulation?
-Often faster than recursion with memoization (no overhead from function calls)
-Avoids stack overflow issues in deep recursion
-Helps visualize how the solution builds
-
-| Feature               		| **Memoization (Top-Down)**                                  						| **Tabulation (Bottom-Up)**                               |
-| ---------------------- 		| ----------------------------------------------------------- 		 				-------------------------------------------------------- |
-| **Approach**           	| Recursive                                                   							| Iterative                                                |
-| **Direction**          	| Solves problems **from the top (original)** to the **base** 				| Solves problems **from the base** up to the **original** |
-| **Function Calls**     	| Uses recursion with caching                                 						| Uses loops (no recursion)                                |
-| **Cache Type**         	| Usually a map or DP array used inside recursive calls       				| Uses a full DP table (array or matrix)                   |
-| **Base Case Handling** 	| Implicit (through recursive base case)                      					| Explicit (manually initialized)                          |
-| **Stack Overhead**     	| Possible (deep recursion can cause stack overflow)          				| None (no recursion, so no stack overflow)                |
-| **Performance**        	| Slightly slower due to function call overhead               				| Faster in practice due to no recursive calls             |
-| **Ease of Writing**    	| Often easier and intuitive to write                         					| May require more careful ordering of computations        |
-| **Debugging**          	| Can be harder to trace due to recursive calls               					| Easier to debug due to sequential nature                 |
-
-Tabulation method is fast compare to memoization because in tabulation elements are stored in table format that can be accessed directly , while in memoization method we can't access directly.
-
-Coin change example:
-arr={1, 2, 3, 4, 5}
-int n=5;
-int sum=6;
-edge cases:
-if(sum==0) return 1;
-if(sum<0 || n==0) return 0;
-
-
 Recursion :
 import java.util.*;
 
@@ -2489,62 +1410,8 @@ public class Main{
 }
 
 Bcktracking:
-
-Backtracking is a general-purpose algorithmic technique used to solve recursive problems by trying all possible options and undoing the steps that don't lead to a valid solution.
-Think of it like exploring a maze:
-At each intersection, you pick a direction.
-If it leads to a dead end, you backtrack and try another path.
-Eventually, you find the correct path or determine that no path exists.
-Backtracking = Recursion + Backtrack (Undo)
-
-Structure:
-void backtrack(parameters) {
-    if (reached solution condition) {
-        save or print solution;
-        return;
-    }
-
-    for (option in choices) {
-        if (isValid(option)) {
-            make a choice;
-            backtrack(updated parameters);
-            undo the choice (backtrack);
-        }
-    }
-}
-
-Uses of backtracking:
-
-| Scenario                                      				| Examples                         |
-| --------------------------------------------- 				| -------------------------------- |
-| Multiple options at each step                 			| N-Queens, Sudoku                 |
-| Need to explore all combinations/permutations 		| Subsets, Permutations            |
-| Need to satisfy constraints                   			| Graph coloring, Word Search      |
-| Solving puzzles or games                      				| Crossword filling, Knight’s tour |
-
-Blue print for backtracking:
-1.Base case-> save solution 
-           -> print 
-2.for taking the choice for the given scenario you can use iterations for particular range 
-3.we have to check the choice is valid or not
-4.Making the choice means updating the state with that choice after satisfying all the possible conditions
-5.recursive call,in this recursive call to fill the next position based upon the index if all the above steps are satisfied then we will come back again to the recursive call , otherwise we will move to the sixth step means undo peration the choice 
-
-                     Brute force                                                                                         Backtracking
-
-1.In brute force, you have check all the possible conditions and return it.                   1.In backtracking, we have will do recursive calls and save it till the end of the possible                           												outcomes
-
-
 Rat in a maze:
-
-1.start (0,0) -> check the opening is there
-2.mark visited
-3.directions either top, left,right, down
-4.if you reach n-1, n-1 // add to the solution
-5.backtrack -- remove or unmark
-
- program:
-
+Program:
 import java.util.*;
 class Main {
     static int n;
@@ -2598,3 +1465,4 @@ class Main {
         }
     }
 }
+
