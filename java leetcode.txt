@@ -1,0 +1,274 @@
+Java Leetcode Problems:
+Reorder list:
+class Solution {
+    public void reorderList(ListNode head) {
+        ListNode temp1=head;
+        ListNode temp2=head;
+        while(temp2!=null&& temp2.next!=null&& temp2.next.next!=null){
+            temp1=temp1.next;
+            temp2=temp2.next.next;
+        }
+        ListNode second=reverse(temp1.next);
+        temp1.next=null;
+        ListNode first=head;
+        while(second!=null){
+            ListNode x1=first.next;
+            ListNode x2=second.next;
+            first.next=second;
+            second.next=x1;
+            first=x1;
+            second=x2;
+        }
+    }
+    public static ListNode reverse(ListNode temp){
+        ListNode prev=null;
+        while(temp!=null){
+            ListNode curr=temp.next;
+            temp.next=prev;
+            prev=temp;
+            temp=curr;
+        }
+        return prev;
+    }
+    
+}
+
+Add two numbers:
+import java.math.*;
+class Solution {
+    public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        StringBuilder s1 = new StringBuilder();
+        StringBuilder s2 = new StringBuilder();
+        while(l1!=null){
+            s1.append(l1.val);
+            l1=l1.next;
+        }
+        while(l2!=null){
+            s2.append(l2.val);
+            l2=l2.next;
+        }
+        BigInteger num1 = new BigInteger(s1.reverse().toString());
+        BigInteger num2 = new BigInteger(s2.reverse().toString());
+        BigInteger sum = num1.add(num2);
+        String sumStr = new StringBuilder(sum.toString()).reverse().toString();
+        ListNode temp=new ListNode(0);
+        ListNode curr=temp;
+        for(char ch:sumStr.toCharArray()){
+            curr.next=new ListNode(ch-'0');
+            curr=curr.next;
+           
+        }
+        return temp.next;
+        }
+        
+    }
+
+Unique 3-Digit Even Numbers:
+class Solution {
+    public int totalNumbers(int[] digits) {
+        int len=3;
+        boolean[] used=new boolean[digits.length];
+        HashSet<String> res=new HashSet<>();
+        even(digits, len, "", res, used);
+        return res.size();
+
+    }
+    public static void even(int[] digits, int len, String current, HashSet<String> res, boolean[] used){
+        if(current.length()==len){
+            if(current.charAt(0)=='0')return;
+            if((current.charAt(current.length()-1)-'0')%2!=0) return;
+            res.add(current);
+            return;
+        }
+        for(int i=0; i<digits.length; i++){
+            if(used[i]) continue;
+            used[i]=true;
+            even(digits, len, current+digits[i], res, used);
+            used[i]=false;
+        }
+
+    }
+    
+}
+
+Find the K-th Character in String Game:
+class Solution {
+    public char kthCharacter(int k) {
+        StringBuilder sb=new StringBuilder("a");
+        while(sb.length()<=k){
+            int len=sb.length();
+            for(int i=0; i<len; i++){
+                char nxtchar=(char)(sb.charAt(i)+1);
+                sb.append(nxtchar);
+            }
+        }
+        return sb.charAt(k-1);
+        
+    }
+}
+
+Palindrome Linked List:
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode temp1=head;
+        ListNode temp2=head;
+        if(head==null || head.next==null){
+            return true;
+        }
+        while(temp2!=null && temp2.next!=null){
+            temp1=temp1.next;
+            temp2=temp2.next.next;
+        }
+        ListNode first=head;
+        ListNode second=reverse(temp1);
+        while(first!=null && second!=null){
+            if(first.val!=second.val) return false;
+            first=first.next;
+            second=second.next;
+        }
+        return true;
+        
+    }
+    public static ListNode reverse(ListNode temp1){
+        ListNode prev=null;
+        while(temp1!=null){
+            ListNode nextnode=temp1.next;
+            temp1.next=prev;
+            prev=temp1;
+            temp1=nextnode;
+        }
+        return prev;
+    }
+   
+}
+
+Palindrome Linked List:
+
+class Solution {
+    public boolean isPalindrome(ListNode head) {
+        ListNode temp1=head;
+        ListNode temp2=head;
+        if(head==null || head.next==null){
+            return true;
+        }
+        while(temp2!=null && temp2.next!=null){
+            temp1=temp1.next;
+            temp2=temp2.next.next;
+        }
+        ListNode first=head;
+        ListNode second=reverse(temp1);
+        while(first!=null && second!=null){
+            if(first.val!=second.val) return false;
+            first=first.next;
+            second=second.next;
+        }
+        return true;
+        
+    }
+    public static ListNode reverse(ListNode temp1){
+        ListNode prev=null;
+        while(temp1!=null){
+            ListNode nextnode=temp1.next;
+            temp1.next=prev;
+            prev=temp1;
+            temp1=nextnode;
+        }
+        return prev;
+    }
+   
+}
+
+Permutations:
+
+class Solution {
+    public List<List<Integer>> permute(int[] nums) {
+        List<List<Integer>> list=new ArrayList<>();
+        backtrack(list, new ArrayList<>(), nums);
+        return list;
+    }
+    public static void backtrack(List<List<Integer>> list, ArrayList<Integer> temp, int[] nums){
+        if(temp.size()==nums.length){
+            list.add(new ArrayList<>(temp));
+            return;
+        }
+        for(int i=0; i<nums.length; i++){
+            if(!temp.contains(nums[i])){
+                temp.add(nums[i]);
+                backtrack(list, temp, nums);
+                temp.remove(temp.size()-1);
+            }
+        }
+    }
+}
+
+N-Queens:
+
+class Solution {
+    public List<List<String>> solveNQueens(int n) {
+       List<List<String>> list=new ArrayList<>();
+       char[][] queen=new char[n][n];
+       for(int i=0; i<n; i++){
+        Arrays.fill(queen[i], '.');
+       }
+       backtrack(queen, list, n, 0);
+       return list;
+    }
+    public static void backtrack(char[][] queen,List<List<String>> list,int n, int row){
+        if(row==n){
+            List<String> curr=new ArrayList<>();
+            for(int i=0; i<n; i++){
+                curr.add(new String(queen[i]));
+            }
+            list.add(curr);
+            return;
+        }
+        for(int col=0; col<n; col++){
+            if(isSafe(queen, n, row, col)){
+                queen[row][col]='Q';
+                backtrack(queen, list, n, row+1);
+                queen[row][col]='.';
+            }
+        }
+    }
+    public static boolean isSafe(char[][] queen, int n, int row, int col){
+        for(int i=0; i<row; i++){
+            if(queen[i][col]=='Q'){
+                return false;
+            }
+        }
+        for(int i=row-1, j=col-1; i>=0&&j>=0;i--, j--){
+            if(queen[i][j]=='Q'){
+                return false;
+            }
+        }
+        for(int i=row-1, j=col+1;i>=0&&j<n; i--, j++){
+            if(queen[i][j]=='Q'){
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+Longest Common Subsequence:
+class Solution {
+    public int longestCommonSubsequence(String text1, String text2) {
+        int m=text1.length(), n=text2.length();
+        int[][] dp=new int[m+1][n+1];
+        for(int i=0; i<m+1; i++){
+        Arrays.fill(dp[i], -1);
+        }
+        return lcs(text1, text2, m, n, dp);
+        
+    }
+    public static int lcs(String s1, String s2, int m, int n, int[][] dp){
+        if(m==0 || n==0) return 0;
+        if(dp[m][n]!=-1){
+            return dp[m][n];
+        }if(s1.charAt(m-1)==s2.charAt(n-1)) dp[m][n]=1+lcs(s1, s2, m-1, n-1, dp);
+        else{
+            dp[m][n]=Math.max(lcs(s1, s2, m-1, n, dp), lcs(s1, s2, m, n-1, dp));
+        }
+        return dp[m][n];
+    }
+}
